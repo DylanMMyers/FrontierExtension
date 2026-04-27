@@ -1,0 +1,24 @@
+roadmap for 689 fe impl:
+1. Set up env
+2. Factors of the FE algorithm:
+	- Formation of graph (must be input friendly with common formats)
+	- Computing optimal LP for some lam_0
+	- Computing ACR for lam_0 for l,r endpoints using two more LPs
+	- Iterate until we define our initial range of lams
+	- Rounding of returned family (also something to play around with? check paper)*********
+3. Pruning lams to make a smaller subset
+4. Messing around with paramaters/constraints of LPs (specifically the first bullet of step 2)
+5. Good documentation + compartmentalization (end goal is all parts should be able to be stripped and be used else where)
+6. Any observations, also good to interface it and make it work with visuals
+
+main paper:
+https://drops.dagstuhl.de/storage/00lipics/lipics-vol170-mfcs2020/LIPIcs.MFCS.2020.39/LIPIcs.MFCS.2020.39.pdf
+
+other paper:
+https://dl.acm.org/doi/10.1145/3583780.3614878
+
+notes from class:
+For the actual impl itself, the value of the project is that it’s implemented and potentially useful for someone (Dr. Vedlt) 
+to use. My main focus should be on just getting it implemented. It’s very worth coding multiple constraints/versions to test the 
+tradeoffs between the triadac constraint and regular “triplet” constraint (see picture of board you took). Understand the  
+tradeoffs and try to draw conclusions/form relationships based on the resulting lambda values etc

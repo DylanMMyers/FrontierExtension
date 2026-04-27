@@ -347,51 +347,6 @@ From the CIKM paper repo
 end
 
 """
-Given a flag (false == "backward" (theta-), true == "forward" (theta+)), will calculate the endpoint for which a
-clustering is a valid (1 + epsi) approximation
-Solves two auxillary LPs' to calculate this
-
-Input:
-x* (representing opt solution for some lam_0), A (adj matrix), lam_0, epsi, direction flag
-
-Output:
-theta (representing the lowest/largest value which we could change lam_0 by and still have it be a (1 + epsi) approx)
-
-"""
-function ORLP()
-    n = size(A, 1)
-    s = forward ? 1 : -1
-
-    # 1. Extract the constraint matrix from the original LP
-    #    - triangle inequality constraints (the ones that were active/added during lazy solve)
-    #    - upper bound constraints (x_ij <= 1)
-    #    - lower bound constraints (x_ij >= 0)
-    #    This gives us A_constr and b_constr s.t. A_constr * x >= b_constr
-
-    # 2. Build the objective weight vector c for the primal
-    #    - c_ij = 1 - lam_0 if (i,j) in E
-    #    - c_ij = -lam_0   if (i,j) not in E
-
-    # 3. Build the perturbation direction vector d
-    #    - d_ij = -1 for all i < j
-
-    # 4. Compute primal objective value of x_star at lam_0
-    #    - primal_obj = c^T x_star + lam_0 * C(n,2)
-
-    # 5. Set up new Gurobi model to maximize theta
-    #    Variables: y (one per constraint in A_constr), theta (scalar >= 0)
-    #
-    #    Constraints:
-    #      a) Dual feasibility: A_constr^T y <= c + s*theta*d
-    #      b) Approx guarantee: (1+epsi)(b^T y + (lam_0 + s*theta)*C(n,2)) >= c^T x_star + s*theta*d^T x_star + (lam_0 + s*theta)*C(n,2)
-    #      c) y >= 0, theta >= 0
-    #
-    #    Objective: maximize theta
-
-    # 6. Solve and return theta
-end
-
-"""
 
 HELPERS BELOW
 
