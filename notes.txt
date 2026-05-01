@@ -29,7 +29,7 @@ tradeoffs and try to draw conclusions/form relationships based on the resulting 
 impl notes (post coding):
 
 I noticed that when using the triadic constraint, you end up with significantly more lambda values in 
-the returned set. I believe this occurs because since the triadic constraint is weaker than the raw 
+the returned set (post further testing Dylan here, this actually ends up being not true). I believe this occurs because since the triadic constraint is weaker than the raw 
 triangle inequality constraint, our ORLP dual has "less idea" of how far it can preturb the original solution. 
 This results in it pushing the boundary less, which results in smaller right bounds and in turn more values used 
 overall. This is the main tradeoff I think, there might be more nuanced things underlying but this is the main idea.
