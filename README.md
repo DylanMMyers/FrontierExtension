@@ -3,16 +3,39 @@ My implementation of the Frontier Extension algorithm, which was created by the 
 
 Uses existing algorithms for solving LambdaCC and rounding approximated clusterings from this repo: https://github.com/nveldt/LambdaCC-Projects
 
+# Benchmarks
+
+I tested it on various graphs with epsi=0.1 (on my local machine) for time:
+
+- **Karate.mat (n=34, m=78)** (triangle inequalities constraint) - 3.21s/
+
+- **Karate.mat (n=34, m=78)** (open wedge constraint) - 
+
+- **dolphins.mat (n=62, m=159)** (triangle inequalities constraint) - 16.4s
+
+- **dolphins.mat (n=62, m=159)** (open wedge constraint) - 1.84s
+
+- **jazzA.mat (n=198, m=2742)** (triangle inequalities constraint) - TOOK TOO LONG (could be worth testing on grace etc.)
+
+- **jazzA.mat (n=198, m=2742)** (open wedge constraint) - 1775.31s
+
+# Requirements
+- Julia 1.12+
+- Gurobi (with valid license)
+- Packages: Gurobi.jl, JuMP.jl, MAT.jl, SparseArrays, LinearAlgebra, Plots
+
 # Usage
+Note that lower epsilon values and using the wedge constraint will result in larger raw covers (important to keep in mind if you plan on not using lflag/pruning). Obviosuly, pruning will fix this but results in longer runtimes as extra computation is needed (nontrivial due to having to compute ORLP twice instead of once).
+
 I've tried to make it as easy to run as possible, there are a few flags added to 
-make it straightforward:
+make it straightforward and provide some flexibility:
 
-**--graph <_dir_>** - pass in the directory to your graph in relation to root of directory (default is the karate graph).
+**--graph <_dir_>** - Pass in the directory to your graph in relation to root of directory (default is the karate graph).
 
-**--epsi <_val_>** - pass in the desired epsilon value (default is 0).
+**--epsi <_val_>** - Pass in the desired epsilon value (default is 1).
 
-**--lfag** - determine if you want to determine the left bound of all considered lambda
-values (by default and in the paper, we only compute the right bound for efficiency). Note this will increase the runtime.
+**--lflag** - Determine if you want to compute the left bound of all considered lambda
+values. By default and in the paper we only compute the right bound for efficiency. This might result in an interval like [0.3, 0.6] while it really covers [0.1, 0.6] (obviously causing the reported bounds to be inaccurate). Note this will increase the runtime. I'm writing this like it's not Dr. Veldt reading it but in case you forgot how your own algorithm operates.
 
 **--no-prune** - Disables pruning of the set of clusterings/lambdas returned by FE.
 
