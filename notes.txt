@@ -1,5 +1,7 @@
 ***these are my personal notes for impl the algo, leaving them here because they may or may not 
-be useful in understanding the code/my thought process***
+be useful in understanding the code/my thought process
+
+these notes are not definitive of whats in the project or the final impl, rather just my thoughts and notes***
 
 roadmap for 689 fe impl:
 1. Set up env
