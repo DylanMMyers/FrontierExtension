@@ -151,7 +151,7 @@ function main()
             Elist = entry[5]
             soln = entry[6]
             obj, clus, avg_obj, avg_time = CL_round_LP_new(A, Elist, soln, 50, lam)
-            println("Solution $i: λ=$(round(lam, digits=6)), $(length(unique(clus))) clusters, obj=$obj")
+            println("Solution $i: lam=$(round(lam, digits=6)), $(length(unique(clus))) clusters, obj=$obj")
         end
 
         println("\nCreating visualizations:")
