@@ -1,13 +1,16 @@
+***these are my personal notes for impl the algo, leaving them here because they may or may not 
+be useful in understanding the code/my thought process***
+
 roadmap for 689 fe impl:
 1. Set up env
 2. Factors of the FE algorithm:
 	- Formation of graph (must be input friendly with common formats)
 	- Computing optimal LP for some lam_0
-	- Computing ACR for lam_0 for l,r endpoints using two more LPs
+	- Computing ACR for lam_0 for l,r endpoints using two more LPs (ORLP)
 	- Iterate until we define our initial range of lams
 	- Rounding of returned family (also something to play around with? check paper)*********
 3. Pruning lams to make a smaller subset
-4. Messing around with paramaters/constraints of LPs (specifically the first bullet of step 2)
+4. Messing around with paramaters/constraints of LPs (triadic constraint vs triangle inequality constraint)
 5. Good documentation + compartmentalization (end goal is all parts should be able to be stripped and be used else where)
 6. Any observations, also good to interface it and make it work with visuals
 
@@ -22,3 +25,23 @@ For the actual impl itself, the value of the project is that it’s implemented 
 to use. My main focus should be on just getting it implemented. It’s very worth coding multiple constraints/versions to test the 
 tradeoffs between the triadac constraint and regular “triplet” constraint (see picture of board you took). Understand the  
 tradeoffs and try to draw conclusions/form relationships based on the resulting lambda values etc
+
+impl notes (post coding):
+
+I noticed that when using the triadic constraint, you end up with significantly more lambda values in 
+the returned set. I believe this occurs because since the triadic constraint is weaker than the raw 
+triangle inequality constraint, our ORLP dual has "less idea" of how far it can preturb the original solution. 
+This results in it pushing the boundary less, which results in smaller right bounds and in turn more values used 
+overall. This is the main tradeoff I think, there might be more nuanced things underlying but this is the main idea.
+
+I think similarly to the main tradeoff between the original LambdaCC issue of solving optimally vs. number of 
+breakpoints, using the wedge inequality increases the amount of clusterings we have to go through to cover 
+our entire range with a lower overall runtime in contrast to the triangle inequality method which has higher runtime 
+but goes through less iterations. For very large graphs, only the open wedge constraint is really feasible runtime 
+wise.
+
+For small graphs, large epsi (1 or close to it) need very few solutions to cover the range
+
+Might be a skill issue, but it took 30 minutes to run a graph with 198 nodes (jazzA graph). I think I made 
+it pretty fast but maybe there are some more novel speedups which could be made. At this point, though, I feel 
+like mostly optimizations to squeeze out runtime are available.
