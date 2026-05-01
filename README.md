@@ -5,7 +5,7 @@ Uses existing algorithms for solving LambdaCC and rounding approximated clusteri
 
 # Benchmarks
 
-I tested it on various graphs with epsi=0.1 (on my local machine) for runtime/family size:
+I tested it on various graphs with epsi -> [0.01, 0.1] (on my local machine) for runtime/family size:
 
 - **Karate.mat (n=34, m=78)** (triangle inequalities constraint) - 3.21s/5
 
@@ -15,9 +15,9 @@ I tested it on various graphs with epsi=0.1 (on my local machine) for runtime/fa
 
 - **dolphins.mat (n=62, m=159)** (open wedge constraint) - 1.84s/4
 
-- **jazzA.mat (n=198, m=2742)** (triangle inequalities constraint) - TOOK TOO LONG (could be worth testing on grace etc.)/no result
-
 - **jazzA.mat (n=198, m=2742)** (open wedge constraint) - 1775.31s/4
+
+- **Harvard500A.mat (n=500, m=2043)** (open wedge constraint) - 7061.28/8
 
 # Requirements
 - Julia 1.12+
@@ -25,7 +25,7 @@ I tested it on various graphs with epsi=0.1 (on my local machine) for runtime/fa
 - Packages: Gurobi.jl, JuMP.jl, MAT.jl, SparseArrays, LinearAlgebra, Plots
 
 # Usage
-Note that on average lower epsilon values and using the wedge constraint will result in larger raw families of clusterings. Calculating the left bound and pruning obviously will fix this but results in longer runtimes as extra computation is needed (nontrivial due to having to compute ORLP twice instead of once).
+Note that using the open wedge constraint results in lower runtimes, but can result in gaps in the covering (this is fine in practice as we change lambda by a factor of (1 + epsi) so the approx guarantee is met). Calculating the left bound and pruning obviously will fix this but results in longer runtimes as extra computation is needed (nontrivial due to having to compute ORLP twice instead of once).
 
 I've tried to make it as easy to run as possible, there are a few flags added to 
 make it straightforward and provide some flexibility:
