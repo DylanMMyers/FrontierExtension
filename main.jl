@@ -19,7 +19,7 @@ function parse_args()
     args = Dict(
         "graph" => "graphs/small/Karate.mat",
         "epsi" => 1.0,
-        "lflag" => false,
+        "lflag" => true,
         "prune" => true,
         "constraint" => false,
         "show" => false,
@@ -33,11 +33,9 @@ function parse_args()
         elseif ARGS[i] == "--epsi"
             args["epsi"] = parse(Float64, ARGS[i+1])
             i += 2
-        elseif ARGS[i] == "--lflag"
-            args["lflag"] = true
-            i += 1
         elseif ARGS[i] == "--no-prune"
             args["prune"] = false
+            args["lflag"] = false;
             i += 1
         elseif ARGS[i] == "--wedge-constraint"
             args["constraint"] = true
@@ -112,7 +110,7 @@ function prune_cover(C)
         lam_cursor = best[4]
     end
 
-    println("Pruned: $(length(C) - length(pruned)) solutions (from $(length(C)))")
+    println("Pruned $(length(C) - length(pruned)) solutions (from $(length(C)))")
     return pruned
 end
 
