@@ -25,7 +25,7 @@ I tested it on various graphs with epsi=0.1 (on my local machine) for runtime/fa
 - Packages: Gurobi.jl, JuMP.jl, MAT.jl, SparseArrays, LinearAlgebra, Plots
 
 # Usage
-Note that on average lower epsilon values and using the wedge constraint will result in larger raw families of clusterings (important to keep in mind if you plan on not using lflag/pruning explained below). Obviosuly, calculating the left bound and pruning will fix this but results in longer runtimes as extra computation is needed (nontrivial due to having to compute ORLP twice instead of once).
+Note that on average lower epsilon values and using the wedge constraint will result in larger raw families of clusterings. Calculating the left bound and pruning obviously will fix this but results in longer runtimes as extra computation is needed (nontrivial due to having to compute ORLP twice instead of once).
 
 I've tried to make it as easy to run as possible, there are a few flags added to 
 make it straightforward and provide some flexibility:
@@ -45,6 +45,6 @@ make it straightforward and provide some flexibility:
 
 julia main.jl --graph graphs/small/Karate.mat --epsi 1.0
 
-julia main.jl --graph graphs/small/Karate.mat --epsi 0.5 --lflag
+julia main.jl --graph graphs/small/dolphins.mat --epsi 0.5 --wedge-constraint
 
-julia main.jl --graph graphs/medium/Karate.mat --epsi 0.1 --no-prune --wedge-constraint --show-clusters
+julia main.jl --graph graphs/small/jazzA.mat --epsi 0.1 --no-prune --wedge-constraint --show-clusters
